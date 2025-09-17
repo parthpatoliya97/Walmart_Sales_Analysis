@@ -209,4 +209,233 @@ SELECT *
 FROM yoy_growth;
 ```
 
+#### Additional SQL Questions
+
+#### 10.Total number of invoices
+```sql
+SELECT COUNT(*) FROM walmart;
+```
+
+#### 11. Total sales revenue
+```sql
+SELECT *, unit_price * quantity AS revenue FROM walmart;
+```
+
+#### 12. Total quantity of items sold by category
+```sql
+SELECT 
+    category,
+    COUNT(*) AS total_units
+FROM walmart
+GROUP BY category
+ORDER BY COUNT(*) DESC;
+```
+
+#### 13. Unique product categories
+```sql
+SELECT DISTINCT(category) FROM walmart;
+```
+
+#### 14. Total sales revenue by branch
+```sql
+SELECT 
+    Branch,
+    City,
+    SUM(total) AS total_revenue
+FROM walmart
+GROUP BY Branch, City
+ORDER BY SUM(total) DESC;
+```
+
+#### 15. Maximum and minimum ratings
+```sql
+SELECT MAX(rating), MIN(rating) FROM walmart;
+```
+
+#### 16. Total sales per weekday
+```sql
+SELECT 
+    DAYNAME(date) AS weekday,
+    SUM(total) AS total_sales
+FROM walmart
+GROUP BY DAYNAME(date)
+ORDER BY SUM(total) DESC;
+```
+
+#### 17. Total revenue per product category
+```sql
+SELECT 
+    category,
+    SUM(total) AS total_revenue
+FROM walmart
+GROUP BY category
+ORDER BY SUM(total) DESC;
+```
+
+#### 18. City with highest sales revenue
+```sql
+SELECT 
+    city,
+    SUM(total) AS total_revenue
+FROM walmart
+GROUP BY city
+ORDER BY SUM(total) DESC;
+```
+
+#### 19. Average basket size by category
+```sql
+SELECT 
+    category,
+    ROUND(AVG(quantity), 0) AS avg_quantity
+FROM walmart
+GROUP BY category
+ORDER BY AVG(quantity) DESC;
+```
+
+#### 20. Total sales by month
+```sql
+SELECT 
+    YEAR(date) AS year,
+    MONTH(date) AS month,
+    SUM(total) AS total_sales
+FROM walmart
+GROUP BY YEAR(date), MONTH(date)
+ORDER BY YEAR(date), MONTH(date);
+```
+
+#### 21. Category with highest profit margin
+```sql
+SELECT 
+    category,
+    ROUND(AVG(profit_margin), 2) AS avg_profit_margin
+FROM walmart
+GROUP BY category
+ORDER BY AVG(profit_margin) DESC;
+```
+
+#### 22. Average rating per branch
+```sql
+SELECT 
+    Branch,
+    ROUND(AVG(rating), 0) AS avg_rating
+FROM walmart
+GROUP BY Branch;
+```
+
+#### 23. Branch with highest average profit margin
+```sql
+SELECT 
+    Branch,
+    ROUND(AVG(profit_margin), 2) AS avg_profit_margin
+FROM walmart
+GROUP BY Branch
+ORDER BY AVG(profit_margin) DESC;
+```
+
+#### 24. Peak sales hour of the day
+```sql
+SELECT 
+    HOUR(time) AS hour,
+    SUM(total) AS total_sales
+FROM walmart
+GROUP BY HOUR(time)
+ORDER BY SUM(total) DESC;
+```
+
+#### 25. Top 3 performing branches each month by revenue
+```sql
+WITH cte AS (
+    SELECT 
+        Branch,
+        MONTH(date) AS month,
+        SUM(total) AS total_sales
+    FROM walmart
+    GROUP BY Branch, MONTH(date)
+),
+cte2 AS (
+    SELECT 
+        *,
+        DENSE_RANK() OVER(PARTITION BY month ORDER BY total_sales DESC) AS rnk
+    FROM cte
+)
+SELECT *
+FROM cte2
+WHERE rnk <= 3
+ORDER BY month, rnk;
+```
+
+#### 26. Category with highest month-over-month sales growth
+```sql
+WITH cte AS (
+    SELECT 
+        category,
+        MONTH(date) AS month,
+        SUM(total) AS total_sales
+    FROM walmart
+    GROUP BY category, MONTH(date)
+),
+cte2 AS (
+    SELECT 
+        *,
+        DENSE_RANK() OVER(PARTITION BY category ORDER BY total_sales DESC) AS rnk
+    FROM cte
+)
+SELECT *
+FROM cte2
+WHERE rnk = 1
+ORDER BY category, month;
+```
+
+#### 27. Average profit per transaction by payment method
+```sql
+SELECT 
+    payment_method,
+    ROUND(AVG(profit_margin), 2) AS avg_profit_margin
+FROM walmart
+GROUP BY payment_method;
+```
+
+#### 28. Category profit contribution percentage
+```sql
+WITH profit_cte AS (
+    SELECT 
+        category,
+        ROUND(SUM(unit_price * quantity * profit_margin), 2) AS profit
+    FROM walmart
+    GROUP BY category
+),
+total_cte AS (
+    SELECT SUM(profit) AS total_profit
+    FROM profit_cte
+)
+SELECT 
+    p.category,
+    p.profit,
+    ROUND((p.profit / t.total_profit) * 100, 2) AS contribution_percent
+FROM profit_cte p
+CROSS JOIN total_cte t
+ORDER BY contribution_percent DESC;
+```
+
+#### 29. Rolling 7-day average of sales revenue
+```sql
+WITH daily_sales AS (
+    SELECT 
+        DATE(date) AS sales_date,
+        SUM(total) AS daily_revenue
+    FROM walmart
+    GROUP BY DATE(date)
+)
+SELECT 
+    sales_date,
+    daily_revenue,
+    ROUND(
+        AVG(daily_revenue) OVER (
+            ORDER BY sales_date
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ), 2
+    ) AS rolling_7day_avg
+FROM daily_sales
+ORDER BY sales_date;
+```
 
