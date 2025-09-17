@@ -144,7 +144,7 @@ FROM walmart
 GROUP BY category
 ORDER BY ROUND(SUM(total * profit_margin), 2) DESC;
 ```
-#### Most Common Payment Method per Branch
+#### 7. Most Common Payment Method per Branch
 #### Understand branch-specific payment preferences to streamline payment processing.
 ```sql
 WITH cte AS (
