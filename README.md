@@ -56,7 +56,7 @@
 
 - Conduct a deep-dive analysis into the operations, local marketing, and customer demographics of the top-performing cities (Weslaco, Waxahachie, Plano) to identify best practices that can be applied to lower-performing branches
 
-#### Solving Questins in SQL :-
+### Solving Questins in SQL :-
 
 #### Database Setup & Data Cleaning
 - Create database
@@ -265,7 +265,7 @@ SELECT *
 FROM yoy_growth;
 ```
 
-#### Additional SQL Questions
+### Additional SQL Questions
 
 #### 10.Total number of invoices
 ```sql
