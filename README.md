@@ -2,6 +2,60 @@
 
 ![flowchart](https://github.com/parthpatoliya97/Walmart_Sales_Analysis/blob/main/Workflow_image.png?raw=true)
 
+### Key Insights from Walmart Sales Analysis
+#### Payment Methods :-
+
+- Three unique payment methods are used: Credit Card, E-Wallet, and Cash.
+
+- Credit Card dominates with the highest number of transactions (4,260) and units sold (9,573), making it the top-performing payment method.
+
+- E-Wallet follows closely with 3,911 transactions and 8,932 units sold, while Cash lags behind with 1,880 transactions and 5,077 units sold.
+
+- On average, E-Wallet provides the highest profit margin per transaction, even though Credit Card leads in volume.
+
+#### Product Categories :-
+
+- Home & Lifestyle and Fashion Accessories consistently generate the highest revenue and profit.
+
+- Combined, these two categories contribute ~80% of the total profit, making them the key drivers of overall business performance.
+
+- These categories also receive higher customer ratings compared to others.
+
+- Food & Beverages, Health & Beauty, and Sports & Travel are purchased in higher quantities, suggesting strong demand but lower profitability compared to top-performing categories.
+
+- Food & Beverages and Health & Beauty show strong profit margins, making them strategically important.
+
+#### Branch & City Performance :-
+
+- There are 100 unique branches across all locations.
+
+- E-Wallet is the most popular transaction method in branches, indicating customer trust in digital payments.
+
+- Weslaco, Waxahachie, and Plano are the top-performing cities, contributing significantly to total sales.
+
+#### Time & Seasonality Trends :-
+
+- Evening (3 to 9 PM) is the peak sales window, both in terms of revenue and transactions.
+
+- Thursday and Sunday are the highest revenue-generating days, highlighting weekend and mid-week spikes.
+
+- Months 11, 12, 1, 2, 3 see the highest sales volume, likely due to holiday shopping. marking it as the prime revenue period
+
+
+#### Overall Summary :-
+
+- Credit Card drives the highest transactions and units sold, while E-Wallet offers better profit margins.
+
+- Prioritize and promote credit card payment options. Investigate the drivers behind eWallet's high margins for potential replication across other methods.
+
+- Home & Lifestyle and Fashion Accessories dominate profitability and revenue, forming the core business categories.
+
+- Evenings, Thursdays, Sundays, and the holiday season (Nov–Mar) are the most critical sales periods.
+
+- Align marketing campaigns, staffing schedules, and inventory stocking to these peak periods. Schedule promotions and flash sales for Thursday and Sunday evenings.
+
+- Conduct a deep-dive analysis into the operations, local marketing, and customer demographics of the top-performing cities (Weslaco, Waxahachie, Plano) to identify best practices that can be applied to lower-performing branches
+
 #### Database Setup & Data Cleaning
 - Create database
 ```sql
