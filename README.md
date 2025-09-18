@@ -56,6 +56,8 @@
 
 - Conduct a deep-dive analysis into the operations, local marketing, and customer demographics of the top-performing cities (Weslaco, Waxahachie, Plano) to identify best practices that can be applied to lower-performing branches
 
+#### Solving Questins in SQL :-
+
 #### Database Setup & Data Cleaning
 - Create database
 ```sql
@@ -493,7 +495,7 @@ FROM daily_sales
 ORDER BY sales_date;
 ```
 
-### Solving Questions in Pandas
+### Solving Questions in Pandas :-
 
 
 #### Calculate the total quantity of items sold.
