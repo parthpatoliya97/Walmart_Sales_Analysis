@@ -1,5 +1,5 @@
 ## Walmart_Sales_Analysis
--How can Walmart leverage its sales data to boost revenue and profit? This project seeks to answer that question by performing an exploratory data analysis (EDA) on historical transaction data.
+- How can Walmart leverage its sales data to boost revenue and profit? This project seeks to answer that question by performing an exploratory data analysis (EDA) on historical transaction data.
 
 ![flowchart](https://github.com/parthpatoliya97/Walmart_Sales_Analysis/blob/main/Workflow_image.png?raw=true)
 
