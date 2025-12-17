@@ -3,8 +3,8 @@
 
 ![flowchart](https://github.com/parthpatoliya97/Walmart_Sales_Analysis/blob/main/Workflow_image.png?raw=true)
 
-### Key Insights from Walmart Sales Analysis
-#### Payment Methods :-
+## Key Insights from Walmart Sales Analysis
+### Payment Methods :-
 
 - Three unique payment methods are used: Credit Card, E-Wallet, and Cash.
 
@@ -14,7 +14,7 @@
 
 - On average, E-Wallet provides the highest profit margin per transaction, even though Credit Card leads in volume.
 
-#### Product Categories :-
+### Product Categories :-
 
 - Home & Lifestyle and Fashion Accessories consistently generate the highest revenue and profit.
 
@@ -26,7 +26,7 @@
 
 - Food & Beverages and Health & Beauty show strong profit margins, making them strategically important.
 
-#### Branch & City Performance :-
+### Branch & City Performance :-
 
 - There are 100 unique branches across all locations.
 
@@ -34,7 +34,7 @@
 
 - Weslaco, Waxahachie, and Plano are the top-performing cities, contributing significantly to total sales.
 
-#### Time & Seasonality Trends :-
+### Time & Seasonality Trends :-
 
 - Evening (3 to 9 PM) is the peak sales window, both in terms of revenue and transactions.
 
@@ -43,7 +43,7 @@
 - Months 11, 12, 1, 2, 3 see the highest sales volume, likely due to holiday shopping. marking it as the prime revenue period
 
 
-#### Overall Summary :-
+### Overall Summary :-
 
 - Credit Card drives the highest transactions and units sold, while E-Wallet offers better profit margins.
 
@@ -57,9 +57,11 @@
 
 - Conduct a deep-dive analysis into the operations, local marketing, and customer demographics of the top-performing cities (Weslaco, Waxahachie, Plano) to identify best practices that can be applied to lower-performing branches
 
-### Solving Questins in SQL :-
+-----------------------------------------
 
-#### Database Setup & Data Cleaning
+## Solving Questins in SQL :-
+
+### Database Setup & Data Cleaning
 - Create database
 ```sql
 CREATE DATABASE walmart;
@@ -110,7 +112,7 @@ DELETE FROM walmart WHERE quantity IS NULL;
 SET SQL_SAFE_UPDATES = 1;
 ```
 
-#### 1. Payment Methods Analysis
+### 1. Payment Methods Analysis
 #### Understand customer preferences for payment methods to optimize payment strategies.
 - Get unique payment methods
 ```sql
@@ -127,7 +129,7 @@ GROUP BY payment_method
 ORDER BY COUNT(*) DESC;
 ```
 
-#### 2. Highest-Rated Category in Each Branch
+### 2. Highest-Rated Category in Each Branch
 #### Recognize popular categories in specific branches to enhance customer satisfaction.
 - Count unique branches
 ```sql
@@ -149,7 +151,7 @@ FROM CTE
 WHERE rnk = 1;
 ```
 
-#### 3. Busiest Day for Each Branch
+### 3. Busiest Day for Each Branch
 #### Optimize staffing and inventory management by identifying peak days.
 ```sql
 WITH cte AS (
@@ -166,7 +168,7 @@ FROM cte
 WHERE rnk = 1;
 ```
 
-#### 4. Quantity Sold by Payment Method
+### 4. Quantity Sold by Payment Method
 #### Track sales volume by payment type to understand purchasing habits.
 ```sql
 SELECT 
@@ -177,7 +179,7 @@ GROUP BY payment_method
 ORDER BY COUNT(*) DESC, SUM(quantity) DESC;
 ```
 
-#### 5. Category Ratings by City
+### 5. Category Ratings by City
 #### Guide city-level promotions by understanding regional preferences.
 ```sql
 SELECT 
@@ -190,7 +192,7 @@ FROM walmart
 GROUP BY City, category
 ORDER BY City, category;
 ```
-#### 6. Total Profit by Category
+### 6. Total Profit by Category
 #### Identify high-profit categories to focus expansion efforts.
 ```sql
 SELECT
@@ -201,7 +203,7 @@ FROM walmart
 GROUP BY category
 ORDER BY ROUND(SUM(total * profit_margin), 2) DESC;
 ```
-#### 7. Most Common Payment Method per Branch
+### 7. Most Common Payment Method per Branch
 #### Understand branch-specific payment preferences to streamline payment processing.
 ```sql
 WITH cte AS (
@@ -218,7 +220,7 @@ FROM cte
 WHERE rnk = 1;
 ```
 
-#### 8. Sales Shifts Throughout the Day
+### 8. Sales Shifts Throughout the Day
 #### Manage staff shifts and stock replenishment during high-sales periods.
 ```sql
 SELECT 
@@ -234,7 +236,7 @@ GROUP BY Branch, day_time
 ORDER BY Branch, total_transactions DESC;
 ```
 
-#### 9. Branches with Highest Revenue Decline Year-Over-Year
+### 9. Branches with Highest Revenue Decline Year-Over-Year
 #### Detect branches with declining revenue to address local issues.
 ```sql
 WITH yearly_revenue AS (
@@ -266,19 +268,19 @@ SELECT *
 FROM yoy_growth;
 ```
 
-### Additional SQL Questions
+## Additional SQL Questions
 
-#### 10.Total number of invoices
+### 10.Total number of invoices
 ```sql
 SELECT COUNT(*) FROM walmart;
 ```
 
-#### 11. Total sales revenue
+### 11. Total sales revenue
 ```sql
 SELECT *, unit_price * quantity AS revenue FROM walmart;
 ```
 
-#### 12. Total quantity of items sold by category
+### 12. Total quantity of items sold by category
 ```sql
 SELECT 
     category,
@@ -288,12 +290,12 @@ GROUP BY category
 ORDER BY COUNT(*) DESC;
 ```
 
-#### 13. Unique product categories
+### 13. Unique product categories
 ```sql
 SELECT DISTINCT(category) FROM walmart;
 ```
 
-#### 14. Total sales revenue by branch
+### 14. Total sales revenue by branch
 ```sql
 SELECT 
     Branch,
@@ -304,12 +306,12 @@ GROUP BY Branch, City
 ORDER BY SUM(total) DESC;
 ```
 
-#### 15. Maximum and minimum ratings
+### 15. Maximum and minimum ratings
 ```sql
 SELECT MAX(rating), MIN(rating) FROM walmart;
 ```
 
-#### 16. Total sales per weekday
+### 16. Total sales per weekday
 ```sql
 SELECT 
     DAYNAME(date) AS weekday,
@@ -319,7 +321,7 @@ GROUP BY DAYNAME(date)
 ORDER BY SUM(total) DESC;
 ```
 
-#### 17. Total revenue per product category
+### 17. Total revenue per product category
 ```sql
 SELECT 
     category,
@@ -329,7 +331,7 @@ GROUP BY category
 ORDER BY SUM(total) DESC;
 ```
 
-#### 18. City with highest sales revenue
+### 18. City with highest sales revenue
 ```sql
 SELECT 
     city,
@@ -339,7 +341,7 @@ GROUP BY city
 ORDER BY SUM(total) DESC;
 ```
 
-#### 19. Average basket size by category
+### 19. Average basket size by category
 ```sql
 SELECT 
     category,
@@ -349,7 +351,7 @@ GROUP BY category
 ORDER BY AVG(quantity) DESC;
 ```
 
-#### 20. Total sales by month
+### 20. Total sales by month
 ```sql
 SELECT 
     YEAR(date) AS year,
@@ -360,7 +362,7 @@ GROUP BY YEAR(date), MONTH(date)
 ORDER BY YEAR(date), MONTH(date);
 ```
 
-#### 21. Category with highest profit margin
+### 21. Category with highest profit margin
 ```sql
 SELECT 
     category,
@@ -370,7 +372,7 @@ GROUP BY category
 ORDER BY AVG(profit_margin) DESC;
 ```
 
-#### 22. Average rating per branch
+### 22. Average rating per branch
 ```sql
 SELECT 
     Branch,
@@ -379,7 +381,7 @@ FROM walmart
 GROUP BY Branch;
 ```
 
-#### 23. Branch with highest average profit margin
+### 23. Branch with highest average profit margin
 ```sql
 SELECT 
     Branch,
@@ -389,7 +391,7 @@ GROUP BY Branch
 ORDER BY AVG(profit_margin) DESC;
 ```
 
-#### 24. Peak sales hour of the day
+### 24. Peak sales hour of the day
 ```sql
 SELECT 
     HOUR(time) AS hour,
@@ -399,7 +401,7 @@ GROUP BY HOUR(time)
 ORDER BY SUM(total) DESC;
 ```
 
-#### 25. Top 3 performing branches each month by revenue
+### 25. Top 3 performing branches each month by revenue
 ```sql
 WITH cte AS (
     SELECT 
@@ -421,7 +423,7 @@ WHERE rnk <= 3
 ORDER BY month, rnk;
 ```
 
-#### 26. Category with highest month-over-month sales growth
+### 26. Category with highest month-over-month sales growth
 ```sql
 WITH cte AS (
     SELECT 
@@ -443,7 +445,7 @@ WHERE rnk = 1
 ORDER BY category, month;
 ```
 
-#### 27. Average profit per transaction by payment method
+### 27. Average profit per transaction by payment method
 ```sql
 SELECT 
     payment_method,
@@ -452,7 +454,7 @@ FROM walmart
 GROUP BY payment_method;
 ```
 
-#### 28. Category profit contribution percentage
+### 28. Category profit contribution percentage
 ```sql
 WITH profit_cte AS (
     SELECT 
@@ -474,7 +476,7 @@ CROSS JOIN total_cte t
 ORDER BY contribution_percent DESC;
 ```
 
-#### 29. Rolling 7-day average of sales revenue
+### 29. Rolling 7-day average of sales revenue
 ```sql
 WITH daily_sales AS (
     SELECT 
@@ -496,7 +498,7 @@ FROM daily_sales
 ORDER BY sales_date;
 ```
 
-### Solving Questions in Pandas :-
+## Solving Questions in Pandas :-
 
 
 #### Calculate the total quantity of items sold.
