@@ -3,7 +3,10 @@
 
 ![flowchart](https://github.com/parthpatoliya97/Walmart_Sales_Analysis/blob/main/Workflow_image.png?raw=true)
 
+----------------------------------
+
 ## Key Insights from Walmart Sales Analysis
+
 ### Payment Methods :-
 
 - Three unique payment methods are used: Credit Card, E-Wallet, and Cash.
@@ -13,6 +16,8 @@
 - E-Wallet follows closely with 3,911 transactions and 8,932 units sold, while Cash lags behind with 1,880 transactions and 5,077 units sold.
 
 - On average, E-Wallet provides the highest profit margin per transaction, even though Credit Card leads in volume.
+
+--------------------------
 
 ### Product Categories :-
 
@@ -26,6 +31,8 @@
 
 - Food & Beverages and Health & Beauty show strong profit margins, making them strategically important.
 
+----------------------------
+
 ### Branch & City Performance :-
 
 - There are 100 unique branches across all locations.
@@ -33,6 +40,8 @@
 - E-Wallet is the most popular transaction method in branches, indicating customer trust in digital payments.
 
 - Weslaco, Waxahachie, and Plano are the top-performing cities, contributing significantly to total sales.
+
+-------------------------
 
 ### Time & Seasonality Trends :-
 
@@ -42,6 +51,7 @@
 
 - Months 11, 12, 1, 2, 3 see the highest sales volume, likely due to holiday shopping. marking it as the prime revenue period
 
+--------------------
 
 ### Overall Summary :-
 
@@ -498,24 +508,26 @@ FROM daily_sales
 ORDER BY sales_date;
 ```
 
+-------------------------
+
 ## Solving Questions in Pandas :-
 
 
-#### Calculate the total quantity of items sold.
+### 1.Calculate the total quantity of items sold.
 ```python
 quantity=df['quantity'].sum()
 quantity
 ```
 
 
-#### Find the average unit_price across all transactions.
+### 2.Find the average unit_price across all transactions.
 ```sql
 avg_price=df['unit_price'].mean().round(2)
 avg_price
 ```
 
 
-#### Count how many unique product categories exist.
+### 3.Count how many unique product categories exist.
 
 - it igves total unique count of products
 ```python
@@ -530,7 +542,7 @@ print(sorted(unique_product))
 ```
 
 
-#### Find the most common payment_method.
+### 4.Find the most common payment_method.
 ```python
 payment_method = (
     df.groupby('payment_method')['invoice_id']
@@ -544,64 +556,64 @@ print(payment_method.head(1))
 ```
 
 
-#### Show the total sales per Branch.
+### 5.Show the total sales per Branch.
 ```python
 sales_per_branch=df.groupby('Branch')['total'].sum().round(2).reset_index().rename(columns={'total':'total_sales'}).sort_values(by='Branch')
 sales_per_branch
 ```
 
 
-#### Find the highest rating given by a customer.
+### 6.Find the highest rating given by a customer.
 ```python
 maxi_rating=df['rating'].max()
 maxi_rating
 ```
 
 
-#### Show the average profit_margin across all sales.
+### 7.Show the average profit_margin across all sales.
 ```python
 avg_profit_margin=df['profit_margin'].mean().round(2)
 avg_profit_margin
 ```
 
-#### Convert date to datetime and extract the day of the week each transaction occurred.
+### 8.Convert date to datetime and extract the day of the week each transaction occurred.
 - First convert date & time separately to datetime64[ns]
 ```python
 df['date'] = pd.to_datetime(df['date'], errors='coerce')
 ```
 
-#### If you want a full datetime column (recommended for time-series)
+### If you want a full datetime column (recommended for time-series)
 ```python
 df['datetime'] = pd.to_datetime(df['date'].astype(str) + ' ' + df['time'].astype(str))
 ```
 
 
-#### Calculate the total revenue per product category.
+### 9.Calculate the total revenue per product category.
 ```python
 category_revenue=df.groupby('category')['total'].sum().reset_index().rename(columns={'total':'total_revenue'})
 category_revenue
 ```
 
-#### Find which city generated the highest sales revenue.
+### 10.Find which city generated the highest sales revenue.
 ```python
 city_revenue=df.groupby('City')['total'].sum().reset_index().rename(columns={'total':'total_revenue'})
 city_revenue
 ```
 
-#### Compare the sales distribution by payment method (e.g., cash vs card).
+### 11.Compare the sales distribution by payment method (e.g., cash vs card).
 ```python
 payment_method_sales=df.groupby('payment_method')['total'].sum().reset_index().rename(columns={'total':'total_sales'})
 payment_method_sales
 ```
 
 
-#### Find the average basket size (avg quantity per category).
+### 12.Find the average basket size (avg quantity per category).
 ```python
 avg_quantity=df.groupby('category')['quantity'].mean().round(0).reset_index().rename(columns={'quantity':"avg_quantity"})
 avg_quantity
 ```
 
-#### Calculate the monthly sales trend (group by month).
+### 13.Calculate the monthly sales trend (group by month).
 - adding the month and year columns in the dataframe
 ```python
 df['month']=df['date'].dt.month
@@ -612,9 +624,7 @@ monthly_sales=df.groupby('month')['total'].sum().reset_index().rename(columns={'
 monthly_sales
 ```
 
-
-
-#### Find the most profitable category based on profit_margin.
+### 14.Find the most profitable category based on profit_margin.
 ```python
 profit = df.groupby('category').agg(
     total_revenue=('total', 'sum'),
@@ -624,28 +634,28 @@ profit = df.groupby('category').agg(
 print(profit)
 ```
 
-#### Calculate the average rating per branch.
+### 15.Calculate the average rating per branch.
 ```python
 branch_avg_rating=df.groupby('Branch')['rating'].mean().round(0).reset_index().rename(columns={'rating':'avg_rating'})
 branch_avg_rating
 ```
 
 
-#### Identify the branch with the highest average profit margin.
+### 16.Identify the branch with the highest average profit margin.
 ```python
 avg_profit_margin=df.groupby('Branch')['profit_margin'].mean().round(2).reset_index().rename(columns={'profit_margin':'avg_profit_margin'}).sort_values(by='avg_profit_margin',ascending=False)
 avg_profit_margin.head(3)
 ```
 
 
-#### Find the peak sales hour of the day from the time column.
+### 17.Find the peak sales hour of the day from the time column.
 ```python
 df['hour']=df['datetime'].dt.hour
 peak_sales=df.groupby('hour')['total'].sum().round(2).reset_index().rename(columns={'total':'total_sales'}).sort_values(by='total_sales',ascending=False)
 peak_sales
 ```
 
-#### Identify the top 3 performing branches each month by revenue.
+### 18.Identify the top 3 performing branches each month by revenue.
 ```python
 sales_per_month=df.groupby(['Branch','month'])['total'].sum().reset_index().rename(columns={'total':'total_sales'})
 sales_per_month['rank']=sales_per_month.groupby('month')['total_sales'].rank(method='dense',ascending=False)
@@ -654,13 +664,13 @@ top_3_branch
 ```
 
 
-#### Calculate average profit per transaction by payment method.
+### 19.Calculate average profit per transaction by payment method.
 ```python
 avg_profit=df.groupby('payment_method')['profit_margin'].mean().round(2).reset_index().rename({'profit_margin':'avg_profit_margin'})
 avg_profit
 ```
 
-#### Compute the profit contribution % of each category relative to total profit.
+### 20.Compute the profit contribution % of each category relative to total profit.
 ```python
 df['profit'] = df['total'] * df['profit_margin']
 
@@ -679,9 +689,7 @@ print(category_profit.sort_values(by='contribution',ascending=False))
 ```
 
 
-
-
-#### Segment sales into time slots (Morning, Afternoon, Evening, Night) and find which slot performs best.
+### 21.Segment sales into time slots (Morning, Afternoon, Evening, Night) and find which slot performs best.
 ```python
 import numpy as np
 conditions=[df['hour']<12,df['hour'].between(12,16)]
@@ -697,7 +705,7 @@ shift_sales = (
 shift_sales
 ```
 
-#### rolling 7 day average sales revenue
+### 22.rolling 7 day average sales revenue
 ```python
 rolling_average=df.groupby('date')['total'].sum().reset_index()
 rolling_average['7d_avg']=rolling_average['total'].rolling(window=7).mean().round(2)
